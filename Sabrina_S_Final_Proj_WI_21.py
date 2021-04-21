@@ -39,7 +39,7 @@ plt.tight_layout()
 plt.show()
 
 #Finding area with highest concentration of above average reviews
-rev_m = np.mean(nyc_bnb['number_of_reviews'])
+rev_m = np.mean(rid_empty_reviews['number_of_reviews'])
 print(rev_m)
 
 unique_hood = set(nyc_bnb['neighbourhood'])
@@ -49,22 +49,18 @@ fig_3 = plt.figure(figsize=(10,8))
 sns.boxplot(x = 'number_of_reviews', y = 'neighbourhood', data = above_av,)
 
 plt.xticks(rotation = 45)
-#plt.tight_layout()
 plt.show()
 
 top_5_hood = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'East Elmhurst') | (nyc_bnb['neighbourhood'] == 'Jamaica') | (nyc_bnb['neighbourhood'] == 'Richmond Hill') | (nyc_bnb['neighbourhood'] == 'Springfield Gardens') | (nyc_bnb['neighbourhood'] == 'Tribeca')]
 bnb_heat = top_5_hood.groupby('neighbourhood').number_of_reviews.value_counts().unstack().fillna(0)
 fig_4 = plt.figure()
-#sns.kdeplot(data = top_5_hood, x = 'number_of_reviews', hue = 'neighbourhood', palette = "Accent", multiple = 'stack')
 sns.heatmap(bnb_heat, cmap="Blues", annot = True)
 plt.xticks(rotation = 45)
-#plt.tight_layout()
 plt.show()
 
 #Finding what to price BnB at in Tribeca
 BnB_TB = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'Tribeca')]
 Tri_heat = BnB_TB.groupby('room_type').price.value_counts().unstack().fillna(0)
-#avg_price_BW = np.mean(BnB_BW['price'])
 fig_5 = plt.figure()
 sns.heatmap(Tri_heat.T, cmap="BuPu" )
 plt.xticks(rotation = 45)
@@ -76,7 +72,7 @@ d_1000 = nyc_bnb['minimum_nights'].value_counts()
 print(d_1000)
 
 fig_6 = plt.figure()
-BnB_greater_than_100 = nyc_bnb.loc[(nyc_bnb['price'] > 1000) & (nyc_bnb['neighbourhood'] == 'Tribeca')]
+BnB_greater_than_100 = nyc_bnb.loc[(nyc_bnb['price'] > 799) & (nyc_bnb['neighbourhood'] == 'Tribeca')]
 sns.countplot(data = BnB_greater_than_100, x = 'minimum_nights')
 
 plt.xticks(rotation = 45)
