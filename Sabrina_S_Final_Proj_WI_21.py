@@ -44,16 +44,30 @@ print(rev_m)
 
 unique_hood = set(nyc_bnb['neighbourhood'])
 
-above_av = nyc_bnb.loc[nyc_bnb.number_of_reviews > 23.27]
+above_av = nyc_bnb.loc[nyc_bnb.number_of_reviews > 100]
 fig_3 = plt.figure(figsize=(10,8))
-sns.scatterplot(x = nyc_bnb['neighbourhood'], y = nyc_bnb['number_of_reviews'], hue = nyc_bnb['neighbourhood'], palette = "Accent")
+sns.boxplot(x = 'number_of_reviews', y = 'neighbourhood', data = above_av,)
+
 plt.xticks(rotation = 45)
 #plt.tight_layout()
 plt.show()
 
-top_5_hood = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'East Elmhurst') | (nyc_bnb['neighbourhood'] == 'Jamaica') | (nyc_bnb['neighbourhood'] == 'Harlem') | (nyc_bnb['neighbourhood'] == 'Lower East Side') | (nyc_bnb['neighbourhood'] == 'Bushwick')]
+top_5_hood = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'East Elmhurst') | (nyc_bnb['neighbourhood'] == 'Jamaica') | (nyc_bnb['neighbourhood'] == 'Richmond Hill') | (nyc_bnb['neighbourhood'] == 'Springfield Gardens') | (nyc_bnb['neighbourhood'] == 'Tribeca')]
+bnb_heat = top_5_hood.groupby('neighbourhood').number_of_reviews.value_counts().unstack().fillna(0)
 fig_4 = plt.figure()
-sns.violinplot(x = 'number_of_reviews', y = 'neighbourhood', palette = "Accent", data = top_5_hood)
+#sns.kdeplot(data = top_5_hood, x = 'number_of_reviews', hue = 'neighbourhood', palette = "Accent", multiple = 'stack')
+sns.heatmap(bnb_heat, cmap="Blues", annot = True)
 plt.xticks(rotation = 45)
 #plt.tight_layout()
 plt.show()
+
+#Finding what to price BnB at in Tribeca
+BnB_TB = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'Tribeca')]
+Tri_heat = BnB_TB.groupby('room_type').price.value_counts().unstack().fillna(0)
+#avg_price_BW = np.mean(BnB_BW['price'])
+fig_5 = plt.figure()
+sns.heatmap(Tri_heat.T, cmap="BuPu" )
+plt.xticks(rotation = 45)
+plt.show()
+#Entire home/apt, < 1200
+
