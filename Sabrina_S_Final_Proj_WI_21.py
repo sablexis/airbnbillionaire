@@ -71,3 +71,15 @@ plt.xticks(rotation = 45)
 plt.show()
 #Entire home/apt, < 1200
 
+#How many days would people stay at a place priced over 1000?
+d_1000 = nyc_bnb['minimum_nights'].value_counts()
+print(d_1000)
+
+fig_6 = plt.figure()
+BnB_greater_than_100 = nyc_bnb.loc[(nyc_bnb['price'] > 1000) & (nyc_bnb['neighbourhood'] == 'Tribeca')]
+sns.countplot(data = BnB_greater_than_100, x = 'minimum_nights')
+
+plt.xticks(rotation = 45)
+plt.show()
+#best choice is 30 nights 
+
