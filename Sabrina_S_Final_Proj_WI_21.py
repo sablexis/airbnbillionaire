@@ -83,3 +83,10 @@ plt.xticks(rotation = 45)
 plt.show()
 #best choice is 30 nights 
 
+#Who should host the BnB
+fig_7 = plt.figure()
+host_with_most = nyc_bnb.loc[(nyc_bnb['neighbourhood'] == 'Tribeca')]
+sns.scatterplot(data= host_with_most, x = 'host_name', y= 'calculated_host_listings_count')
+plt.xticks(rotation = 45)
+plt.show()
+#BlueGround
